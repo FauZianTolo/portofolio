@@ -14,19 +14,19 @@ import {
 
 const Createdata = () => {
   const jsonUrl = 'http://10.0.2.2:3000/mahasiswa';
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
-  const [kelas, setKelas] = useState('');
-  const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [rating, setRating] = useState('');
+  const [address, setAddress] = useState('');
+  const [open, setOpen] = useState('');
+  const [close, setClose] = useState('');
 
   const submit = () => {
     const data = {
-      first_name,
-      last_name,
-      email,
-      kelas,
-      gender,
+      name,
+      rating,
+      address,
+      open,
+      close,
     };
     fetch(jsonUrl, {
       method: 'POST',
@@ -40,11 +40,11 @@ const Createdata = () => {
       .then((json) => {
         console.log(json);
         Alert.alert('Sukses', 'Data berhasil disimpan!');
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setKelas('');
-        setGender('');
+        setName('');
+        setRating('');
+        setAddress('');
+        setOpen('');
+        setClose('');
       });
   };
 
@@ -64,39 +64,38 @@ const Createdata = () => {
           <View style={styles.form}>
             <TextInput
               style={styles.input}
-              placeholder="Nama Depan"
+              placeholder="Ruang Terbuka Hijau"
               placeholderTextColor="#ccc"
-              value={first_name}
-              onChangeText={setFirstName}
+              value={name}
+              onChangeText={setName}
             />
             <TextInput
               style={styles.input}
-              placeholder="Nama Belakang"
+              placeholder="Rating"
               placeholderTextColor="#ccc"
-              value={last_name}
-              onChangeText={setLastName}
+              value={rating}
+              onChangeText={setRating}
             />
             <TextInput
               style={styles.input}
-              placeholder="Kelas"
+              placeholder="Alamat"
               placeholderTextColor="#ccc"
-              value={kelas}
-              onChangeText={setKelas}
+              value={address}
+              onChangeText={setAddress}
             />
             <TextInput
               style={styles.input}
-              placeholder="Jenis Kelamin"
+              placeholder="Jam Buka"
               placeholderTextColor="#ccc"
-              value={gender}
-              onChangeText={setGender}
+              value={open}
+              onChangeText={setOpen}
             />
             <TextInput
               style={styles.input}
-              placeholder="Email"
+              placeholder="Jam Tutup"
               placeholderTextColor="#ccc"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
+              value={close}
+              onChangeText={setClose}
             />
             <TouchableOpacity style={styles.button} onPress={submit}>
               <Text style={styles.buttonText}>Simpan</Text>

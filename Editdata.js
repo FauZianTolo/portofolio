@@ -9,17 +9,17 @@ import {
   ScrollView,
 } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faGraduationCap, faEdit, faSave, faPlus, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faTree, faEdit, faSave, faPlus, faSync } from '@fortawesome/free-solid-svg-icons';
 
 const Createdata = () => {
   const jsonUrl = 'http://10.0.2.2:3000/mahasiswa';
-  const [dataUser, setDataUser] = useState([]);
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
-  const [kelas, setKelas] = useState('');
-  const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [rating, setRating] = useState('');
+  const [address, setAddress] = useState('');
+  const [open, setOpen] = useState('');
+  const [close, setClose] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
+  const [dataUser, setDataUser] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -33,7 +33,7 @@ const Createdata = () => {
   };
 
   const handleSubmit = () => {
-    const data = { first_name, last_name, kelas, gender, email };
+    const data = { name, rating, address, open, close };
     const url = selectedUser ? `${jsonUrl}/${selectedUser.id}` : jsonUrl;
     const method = selectedUser ? 'PATCH' : 'POST';
 
@@ -51,21 +51,21 @@ const Createdata = () => {
   };
 
   const clearForm = () => {
-    setFirstName('');
-    setLastName('');
-    setKelas('');
-    setGender('');
-    setEmail('');
+    setName('');
+    setRating('');
+    setAddress('');
+    setOpen('');
+    setClose('');
     setSelectedUser(null);
   };
 
   const selectItem = (item) => {
     setSelectedUser(item);
-    setFirstName(item.first_name);
-    setLastName(item.last_name);
-    setKelas(item.kelas);
-    setGender(item.gender);
-    setEmail(item.email);
+    setName(item.name);
+    setRating(item.rating);
+    setAddress(item.address);
+    setOpen(item.open);
+    setClose(item.close);
   };
 
   const handleRefresh = () => {
@@ -81,38 +81,38 @@ const Createdata = () => {
       <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Nama Depan"
+          placeholder="Ruang Terbuka Hijau"
           placeholderTextColor="#aaa"
-          value={first_name}
-          onChangeText={setFirstName}
+          value={name}
+          onChangeText={setName}
         />
         <TextInput
           style={styles.input}
-          placeholder="Nama Belakang"
+          placeholder="Rating"
           placeholderTextColor="#aaa"
-          value={last_name}
-          onChangeText={setLastName}
+          value={rating}
+          onChangeText={setRating}
         />
         <TextInput
           style={styles.input}
-          placeholder="Kelas"
+          placeholder="Alamat"
           placeholderTextColor="#aaa"
-          value={kelas}
-          onChangeText={setKelas}
+          value={address}
+          onChangeText={setAddress}
         />
         <TextInput
           style={styles.input}
-          placeholder="Jenis Kelamin"
+          placeholder="Jam Buka"
           placeholderTextColor="#aaa"
-          value={gender}
-          onChangeText={setGender}
+          value={open}
+          onChangeText={setOpen}
         />
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="Jam tutup"
           placeholderTextColor="#aaa"
-          value={email}
-          onChangeText={setEmail}
+          value={close}
+          onChangeText={setClose}
         />
         <TouchableOpacity
           style={[styles.button, selectedUser ? styles.editButton : styles.addButton]}
@@ -129,13 +129,13 @@ const Createdata = () => {
         {dataUser.map((item) => (
           <View key={item.id} style={styles.card}>
             <View style={styles.avatar}>
-              <FontAwesomeIcon icon={faGraduationCap} size={40} color="#4CAF50" />
+              <FontAwesomeIcon icon={faTree} size={40} color="#4CAF50" />
             </View>
             <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>{item.first_name} {item.last_name}</Text>
-              <Text style={styles.cardText}>{item.kelas}</Text>
-              <Text style={styles.cardText}>{item.gender}</Text>
-              <Text style={styles.cardText}>{item.email}</Text>
+              <Text style={styles.cardTitle}>{item.name}</Text>
+              <Text style={styles.cardText}>{item.rating}</Text>
+              <Text style={styles.cardText}>{item.address}</Text>
+              <Text style={styles.cardText}>{item.open} {item.close}</Text>
             </View>
             <TouchableOpacity onPress={() => selectItem(item)} style={styles.editButtonCard}>
               <FontAwesomeIcon icon={faEdit} size={20} color="#fff" />

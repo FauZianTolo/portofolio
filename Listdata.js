@@ -7,10 +7,11 @@ import {
   FlatList,
   Alert,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faGraduationCap, faChevronRight, faTrash, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faTree, faChevronRight, faTrash, faSync, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Listdata = () => {
   const jsonUrl = 'http://10.0.2.2:3000/mahasiswa';
@@ -46,10 +47,17 @@ const Listdata = () => {
       .catch((error) => console.error(error));
   };
 
+  const openInMaps = (latitude, longitude) => {
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    Linking.openURL(url).catch(() =>
+      Alert.alert('Error', 'Tidak dapat membuka Google Maps.')
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Mahasiswa D4 SIG</Text>
+        <Text style={styles.headerText}>RTH di Kota Jogja</Text>
       </View>
       {isLoading ? (
         <View style={styles.loader}>
@@ -65,16 +73,22 @@ const Listdata = () => {
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.card}>
               <View style={styles.avatar}>
-                <FontAwesomeIcon icon={faGraduationCap} size={50} color="#4CAF50" />
+                <FontAwesomeIcon icon={faTree} size={50} color="#4CAF50" />
               </View>
               <View style={styles.info}>
                 <Text style={styles.name}>
-                  {item.first_name} {item.last_name}
+                  {item.name}
                 </Text>
-                <Text style={styles.detail}>Kelas: {item.kelas}</Text>
-                <Text style={styles.detail}>Gender: {item.gender}</Text>
-                <Text style={styles.detail}>Email: {item.email}</Text>
+                <Text style={styles.detail}>Rating: {item.rating}</Text>
+                <Text style={styles.detail}>Alamat: {item.address}</Text>
+                <Text style={styles.detail}>Jam Operasional: {item.open} {item.close} </Text>
               </View>
+              <TouchableOpacity
+                style={styles.mapButton}
+                onPress={() => openInMaps(item.latitude, item.longitude)}
+              >
+                <FontAwesomeIcon icon={faMapMarkerAlt} size={20} color="#fff" />
+              </TouchableOpacity>
               <TouchableOpacity
                 style={styles.deleteButton}
                 onPress={() =>
@@ -107,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f9',
   },
   header: {
-    backgroundColor: '#4CAF50', // Green color for header
+    backgroundColor: '#4CAF50',
     paddingVertical: 25,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
@@ -169,6 +183,13 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     backgroundColor: '#E63946',
+    padding: 10,
+    borderRadius: 50,
+    elevation: 2,
+    marginLeft: 10,
+  },
+  mapButton: {
+    backgroundColor: '#4CAF50',
     padding: 10,
     borderRadius: 50,
     elevation: 2,
