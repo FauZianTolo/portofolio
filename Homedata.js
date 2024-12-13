@@ -1,14 +1,18 @@
 import React from 'react';
-import { View, ScrollView, Text, Image, StyleSheet, SafeAreaView } from 'react-native';
+import { View, ScrollView, Text, Image, StyleSheet, SafeAreaView, ImageBackground } from 'react-native';
 import { Card } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTree } from '@fortawesome/free-solid-svg-icons'; // Icon for the header
+import { faTree } from '@fortawesome/free-solid-svg-icons';
 
 const Homedata = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
-      <LinearGradient colors={['#ff9a9e', '#fad0c4']} style={styles.container}>
+      <ImageBackground
+        source={{ uri: 'https://cdn.pixabay.com/photo/2015/10/04/06/52/mountain-970704_640.jpg' }}
+        style={styles.backgroundImage}
+        imageStyle={{ opacity: 0.5 }} // Transparansi gambar latar belakang
+      >
         <View style={styles.header}>
           <FontAwesomeIcon icon={faTree} size={30} color="#fff" />
           <Text style={styles.headerText}>Selamat Datang</Text>
@@ -82,7 +86,7 @@ const Homedata = () => {
             </Card.Content>
           </Card>
         </ScrollView>
-      </LinearGradient>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -90,10 +94,10 @@ const Homedata = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ff9a9e',
   },
-  container: {
+  backgroundImage: {
     flex: 1,
+    resizeMode: 'cover', // Pastikan gambar mencakup seluruh layar
   },
   scrollView: {
     paddingTop: 100, // Ensure space for the fixed header
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#4CAF50', // Green background
+    backgroundColor: 'rgba(76, 175, 80, 0.8)', // Transparansi untuk background header
     paddingVertical: 25,
     paddingHorizontal: 15,
     alignItems: 'center',
@@ -129,6 +133,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 15,
     overflow: 'hidden',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)', // Transparansi untuk kartu
     elevation: 5,
   },
   sectionTitle: {

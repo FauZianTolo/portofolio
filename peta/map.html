@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peta Interaktif dengan Marker dan Form Input</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <style>
         html,
         body {
@@ -16,13 +16,15 @@
         }
 
         #map {
-            height: calc(100% - 120px); /* Kurangi tinggi map agar tidak menutupi header */
+            height: calc(100% - 120px);
+            /* Kurangi tinggi map agar tidak menutupi header */
             width: 100%;
         }
 
         /* Header Styling */
         .header {
-            background-color: #4CAF50; /* Green color for header */
+            background-color: #4CAF50;
+            /* Green color for header */
             padding: 25px 0;
             border-bottom-left-radius: 30px;
             border-bottom-right-radius: 30px;
@@ -42,10 +44,12 @@
         /* Peta Fullscreen */
         #map {
             position: absolute;
-            top: 75px; /* Header height */
+            top: 75px;
+            /* Header height */
             left: 0;
             width: 100%;
-            height: calc(100% - 60px); /* Full height minus header */
+            height: calc(100% - 60px);
+            /* Full height minus header */
         }
 
         /* Popup Form Styling */
@@ -166,144 +170,203 @@
 </head>
 
 <body>
-<!-- Header -->
-<div class="header">
-    <h1 class="header-text">Tambah Titik</h1>
-</div>
+    <!-- Header -->
+    <div class="header">
+        <h1 class="header-text">Tambah Titik</h1>
+    </div>
 
-<div id="dim-background"></div>
-<button id="add-point-btn">Tambah Titik</button>
-<button id="refresh-btn">🔄</button>
-<div id="map"></div>
+    <div id="dim-background"></div>
+    <button id="add-point-btn">Tambah Titik</button>
+    <button id="refresh-btn">🔄</button>
+    <div id="map"></div>
 
-<!-- Form Popup -->
-<div id="form-popup">
-    <h2>Tambah Data</h2>
-    <form id="mahasiswaForm">
-        <input type="text" id="name" placeholder="Nama Lokasi" required />
-        <input type="text" id="rating" placeholder="Rating" required />
-        <input type="text" id="address" placeholder="Alamat" required />
-        <input type="text" id="open" placeholder="Jam Buka" required />
-        <input type="text" id="close" placeholder="Jam Tutup" required />
-        <input type="hidden" id="latitude" />
-        <input type="hidden" id="longitude" />
-        <button type="submit">Tambah Data</button>
-        <button type="button" id="close-button">Tutup</button>
-    </form>
-</div>
+    <!-- Form Popup -->
+    <div id="form-popup">
+        <h2>Tambah Data</h2>
+        <form id="mahasiswaForm">
+            <input type="text" id="name" placeholder="Nama Lokasi" required />
+            <input type="text" id="rating" placeholder="Rating" required />
+            <input type="text" id="address" placeholder="Alamat" required />
+            <input type="text" id="open" placeholder="Jam Buka" required />
+            <input type="text" id="close" placeholder="Jam Tutup" required />
+            <input type="hidden" id="latitude" />
+            <input type="hidden" id="longitude" />
+            <button type="submit">Tambah Data</button>
+            <button type="button" id="close-button">Tutup</button>
+        </form>
+    </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script>
-    var map = L.map('map').setView([-7.774796670378405, 110.37442978811552], 13);
+    <script>
+        var map = L.map('map').setView([-7.774796670378405, 110.37442978811552], 13);
 
-    // Basemap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18
-    }).addTo(map);
+        /* Tile Basemap */
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution:
+                'Map data ©️ <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
 
-    var formPopup = document.getElementById('form-popup');
-    var dimBackground = document.getElementById('dim-background');
-    var closeButton = document.getElementById('close-button');
-    var addPointBtn = document.getElementById('add-point-btn');
-    var refreshBtn = document.getElementById('refresh-btn');
-    var mahasiswaForm = document.getElementById('mahasiswaForm');
-    var marker = null;
+        var basemap1 = L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="DIVSIGUGM" target="_blank">DIVSIG UGM</a>',
+            }
+        );
 
-    // Event untuk menutup form
-    closeButton.addEventListener('click', function () {
-        formPopup.style.display = 'none';
-        dimBackground.style.display = 'none';
-    });
+        var basemap2 = L.tileLayer(
+            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+            {
+                attribution:
+                    'Tiles &copy; Esri | <a href="Latihan WebGIS" target="_blank">DIVSIG UGM</a>',
+            }
+        );
 
-    // Event tombol tambah titik
-    addPointBtn.addEventListener('click', function () {
-        if (!marker) {
-            marker = L.marker(map.getCenter(), { draggable: true }).addTo(map);
-            marker.bindPopup('Geser marker ke lokasi yang diinginkan, lalu klik marker untuk menambahkan data.').openPopup();
+        var basemap3 = L.tileLayer(
+            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            {
+                attribution:
+                    'Tiles &copy; Esri | <a href="Lathan WebGIS" target="_blank">DIVSIG UGM</a>',
+            }
+        );
 
-            marker.on('click', function () {
-                var latLng = marker.getLatLng();
-                document.getElementById('latitude').value = latLng.lat;
-                document.getElementById('longitude').value = latLng.lng;
-                formPopup.style.display = 'block';
-                dimBackground.style.display = 'block';
-            });
-        }
-    });
+        var basemap4 = L.tileLayer(
+            "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
+            {
+                attribution:
+                    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            }
+        );
 
-    mahasiswaForm.addEventListener('submit', function (event) {
-        event.preventDefault();
+        basemap2.addTo(map);
 
-        var name = document.getElementById('name').value;
-        var rating = document.getElementById('rating').value;
-        var address = document.getElementById('address').value;
-        var open = document.getElementById('open').value;
-        var close = document.getElementById('close').value;
-        var latitude = document.getElementById('latitude').value;
-        var longitude = document.getElementById('longitude').value;
-
-        var newData = {
-            name: name,
-            rating: rating,
-            address: address,
-            open: open,
-            close: close,
-            latitude: parseFloat(latitude),
-            longitude: parseFloat(longitude)
+        var baseMaps = {
+            OpenStreetMap: basemap1,
+            "Esri World Street": basemap2,
+            "Esri Imagery": basemap3,
+            "Stadia Dark Mode": basemap4,
         };
 
-        fetch('http://10.0.2.2:3000/mahasiswa', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                L.marker([latitude, longitude]).addTo(map)
-                    .bindPopup(`<strong>${name}</strong><br>
-                    Rating: ${rating}<br>${address}<br>Jam: ${open}-${close}`)
-                    .openPopup();
+        L.control.layers(baseMaps).addTo(map);
 
-                mahasiswaForm.reset();
-                formPopup.style.display = 'none';
-                dimBackground.style.display = 'none';
-                marker.remove();
-                marker = null;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
+        var formPopup = document.getElementById('form-popup');
+        var dimBackground = document.getElementById('dim-background');
+        var closeButton = document.getElementById('close-button');
+        var addPointBtn = document.getElementById('add-point-btn');
+        var refreshBtn = document.getElementById('refresh-btn');
+        var mahasiswaForm = document.getElementById('mahasiswaForm');
+        var marker = null;
 
-    function loadData() {
-        fetch('http://10.0.2.2:3000/mahasiswa')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(item => {
-                    L.marker([item.latitude, item.longitude]).addTo(map)
-                        .bindPopup(`<strong>${item.name}</strong><br>
-                        Rating: ${item.rating}<br>${item.address}<br>Jam: ${item.open}-${item.close}`);
+        // Event untuk menutup form
+        closeButton.addEventListener('click', function () {
+            formPopup.style.display = 'none';
+            dimBackground.style.display = 'none';
+        });
+
+        // Event tombol tambah titik
+        addPointBtn.addEventListener('click', function () {
+            if (!marker) {
+                marker = L.marker(map.getCenter(), { draggable: true }).addTo(map);
+                marker.bindPopup('Geser marker ke lokasi yang diinginkan, lalu klik marker untuk menambahkan data.').openPopup();
+
+                marker.on('click', function () {
+                    var latLng = marker.getLatLng();
+                    document.getElementById('latitude').value = latLng.lat;
+                    document.getElementById('longitude').value = latLng.lng;
+                    formPopup.style.display = 'block';
+                    dimBackground.style.display = 'block';
                 });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    refreshBtn.addEventListener('click', function () {
-        map.eachLayer(function (layer) {
-            if (layer instanceof L.Marker && layer !== marker) {
-                map.removeLayer(layer);
             }
         });
-        loadData();
-    });
 
-    loadData();
-</script>
+        mahasiswaForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var rating = document.getElementById('rating').value;
+            var address = document.getElementById('address').value;
+            var open = document.getElementById('open').value;
+            var close = document.getElementById('close').value;
+            var latitude = document.getElementById('latitude').value;
+            var longitude = document.getElementById('longitude').value;
+
+            var newData = {
+                name: name,
+                rating: rating,
+                address: address,
+                open: open,
+                close: close,
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude)
+            };
+
+            fetch('http://10.0.2.2:3000/mahasiswa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newData)
+            })
+
+                .then(response => response.json())
+                .then(data => {
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup(`<strong>${name}</strong><br>
+                    Rating: ${rating}<br>${address}<br>Jam: ${open}-${close}`)
+                        .openPopup();
+
+                    mahasiswaForm.reset();
+                    formPopup.style.display = 'none';
+                    dimBackground.style.display = 'none';
+                    marker.remove();
+                    marker = null;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
+
+        function loadData() {
+            fetch('http://10.0.2.2:3000/mahasiswa')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        L.marker([item.latitude, item.longitude]).addTo(map)
+                            .bindPopup(`
+                <strong>${item.name}</strong><br>
+                <img src=${item.image_url} style="width: 100%; height: auto; border-radius: 10px; margin-top: 10px;">
+                        <br>
+                Rating: ${item.rating}<br>
+                ${item.address}<br>
+                Jam: ${item.open}-${item.close}<br>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" target="_blank">
+                    <button style="background-color: #4CAF50; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                        Navigasi ke Rute
+                    </button>
+                </a>
+            `);
+                    });
+                })
+        }
+
+        refreshBtn.addEventListener('click', function () {
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.Marker && layer !== marker) {
+                    map.removeLayer(layer);
+                }
+            });
+            loadData();
+        });
+
+        loadData();
+
+
+
+    </script>
 </body>
 
 </html>
