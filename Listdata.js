@@ -10,6 +10,7 @@ import {
   Linking,
   TextInput,
   Image,
+  ImageBackground,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -74,78 +75,84 @@ const Listdata = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>RTH di Kota Jogja</Text>
-      </View>
-
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <FontAwesomeIcon icon={faSearch} size={20} color="#666" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Cari nama RTH..."
-          value={searchQuery}
-          onChangeText={handleSearch}
-        />
-      </View>
-
-      {isLoading ? (
-        <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#4CAF50" />
-          <Text style={styles.loadingText}>Loading...</Text>
+    <ImageBackground
+      source={{ uri: 'https://images.unsplash.com/photo-1611243017235-84454d0491aa?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGd1bnVuZyUyMG1lcmFwaXxlbnwwfHwwfHx8MA%3D%3D' }}
+      style={styles.backgroundImage}
+      imageStyle={{ opacity: 0.8 }}
+    >
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>RTH di Kota Jogja</Text>
         </View>
-      ) : (
-        <FlatList
-          data={filteredData}
-          onRefresh={refreshPage}
-          refreshing={refresh}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.card}>
 
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Image style={styles.cardImage}
-                  source={{ uri: item.image_url }}// Increased width and height
-                />
-              </View>
-              <View style={styles.info}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.detail}>Rating: {item.rating}</Text>
-                <Text style={styles.detail}>Alamat: {item.address}</Text>
-                <Text style={styles.detail}>
-                  Jam Operasional: {item.open} - {item.close}
-                </Text>
-              </View>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.mapButton}
-                  onPress={() => openInMaps(item.latitude, item.longitude)}
-                >
-                  <FontAwesomeIcon icon={faMapMarkerAlt} size={20} color="#fff" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={() =>
-                    Alert.alert('Hapus Data', 'Yakin ingin menghapus data ini?', [
-                      { text: 'Tidak', onPress: () => console.log('Tidak') },
-                      { text: 'Ya', onPress: () => deleteData(item.id) },
-                    ])
-                  }
-                >
-                  <FontAwesomeIcon icon={faTrash} size={20} color="#fff" />
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      )}
+        {/* Search Bar */}
+        <View style={styles.searchContainer}>
+          <FontAwesomeIcon icon={faSearch} size={20} color="#666" style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Cari nama RTH..."
+            value={searchQuery}
+            onChangeText={handleSearch}
+          />
+        </View>
 
-      {/* FAB Button for Refresh */}
-      <TouchableOpacity style={styles.fab} onPress={refreshPage}>
-        <FontAwesomeIcon icon={faSync} size={20} color="#fff" />
-      </TouchableOpacity>
-    </SafeAreaView>
+        {isLoading ? (
+          <View style={styles.loader}>
+            <ActivityIndicator size="large" color="#4CAF50" />
+            <Text style={styles.loadingText}>Loading...</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={filteredData}
+            onRefresh={refreshPage}
+            refreshing={refresh}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.card}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Image
+                    style={styles.cardImage}
+                    source={{ uri: item.image_url }}
+                  />
+                </View>
+                <View style={styles.info}>
+                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.detail}>Rating: {item.rating}</Text>
+                  <Text style={styles.detail}>Alamat: {item.address}</Text>
+                  <Text style={styles.detail}>
+                    Jam Operasional: {item.open} - {item.close}
+                  </Text>
+                </View>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    style={styles.mapButton}
+                    onPress={() => openInMaps(item.latitude, item.longitude)}
+                  >
+                    <FontAwesomeIcon icon={faMapMarkerAlt} size={20} color="#fff" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() =>
+                      Alert.alert('Hapus Data', 'Yakin ingin menghapus data ini?', [
+                        { text: 'Tidak', onPress: () => console.log('Tidak') },
+                        { text: 'Ya', onPress: () => deleteData(item.id) },
+                      ])
+                    }
+                  >
+                    <FontAwesomeIcon icon={faTrash} size={20} color="#fff" />
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        )}
+
+        {/* FAB Button for Refresh */}
+        <TouchableOpacity style={styles.fab} onPress={refreshPage}>
+          <FontAwesomeIcon icon={faSync} size={20} color="#fff" />
+        </TouchableOpacity>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 
@@ -154,10 +161,13 @@ export default Listdata;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white', // Warna latar belakang biru muda
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
   },
   header: {
-    backgroundColor: '#4CAF50', // Warna hijau tetap
+    backgroundColor: '#4CAF50',
     paddingVertical: 25,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
@@ -173,17 +183,17 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: '#fff',
     fontWeight: 'bold',
-    textShadowColor: '#000', // Menambahkan efek bayangan pada teks
+    textShadowColor: '#000',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 10,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff', // Putih dengan sedikit bayangan
+    backgroundColor: '#ffffff',
     marginHorizontal: 10,
     marginBottom: 10,
-    borderRadius: 30, // Membuat sudut lebih melengkung
+    borderRadius: 30,
     paddingHorizontal: 15,
     elevation: 3,
     shadowColor: '#000',
@@ -193,7 +203,7 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     marginRight: 10,
-    color: '#4CAF50', // Ikon dengan warna hijau
+    color: '#4CAF50',
   },
   searchInput: {
     flex: 1,
@@ -201,7 +211,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     borderBottomWidth: 1,
-    borderBottomColor: '#4CAF50', // Garis bawah berwarna hijau
+    borderBottomColor: '#4CAF50',
   },
   loader: {
     flex: 1,
@@ -211,19 +221,19 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 16,
-    color: '#4CAF50', // Warna loader hijau
+    color: '#4CAF50',
   },
   card: {
     marginVertical: 8,
     marginHorizontal: 15,
-    backgroundColor: 'rgba(255, 255, 255, 0.85)', // Transparansi lebih pas dan tidak terlalu mencolok
-    borderRadius: 15, // Sudut lebih melengkung
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    borderRadius: 15,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.9, // Bayangan lebih lembut
+    shadowOpacity: 0.9,
     shadowRadius: 10,
-    overflow: 'hidden', // Agar gambar tidak keluar dari batas
+    overflow: 'hidden',
   },
   cardImage: {
     width: '100%',

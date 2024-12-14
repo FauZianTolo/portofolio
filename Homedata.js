@@ -3,18 +3,16 @@ import { View, ScrollView, Text, Image, StyleSheet, SafeAreaView, ImageBackgroun
 import { Card } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faTree } from '@fortawesome/free-solid-svg-icons';
 
 const Homedata = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ImageBackground
-        source={{ uri: 'https://cdn.pixabay.com/photo/2015/10/04/06/52/mountain-970704_640.jpg' }}
+        source={{ uri: 'https://images.pexels.com/photos/2444403/pexels-photo-2444403.jpeg?cs=srgb&dl=pexels-chris-czermak-1280625-2444403.jpg&fm=jpg' }}
         style={styles.backgroundImage}
-        imageStyle={{ opacity: 0.5 }} // Transparansi gambar latar belakang
+        imageStyle={{ opacity: 0.8 }} // Transparansi gambar latar belakang
       >
         <View style={styles.header}>
-          <FontAwesomeIcon icon={faTree} size={30} color="#fff" />
           <Text style={styles.headerText}>Selamat Datang</Text>
         </View>
 
@@ -108,7 +106,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'rgba(76, 175, 80, 0.8)', // Transparansi untuk background header
+    backgroundColor: 'rgba(76, 175, 80, 1)', // Transparansi untuk background header
     paddingVertical: 25,
     paddingHorizontal: 15,
     alignItems: 'center',
@@ -124,11 +122,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   headerText: {
-    fontSize: 26,
-    color: '#fff',
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
+      fontSize: 28,
+      color: '#fff',
+      fontWeight: 'bold',
+      textShadowColor: '#000', // Menambahkan efek bayangan pada teks
+      textShadowOffset: { width: 2, height: 2 },
+      textShadowRadius: 10,
+    },
   card: {
     marginVertical: 10,
     borderRadius: 15,

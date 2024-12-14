@@ -22,24 +22,32 @@
         }
 
         /* Header Styling */
-        .header {
-            background-color: #4CAF50;
-            /* Green color for header */
-            padding: 25px 0;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
-            z-index: 1000;
-        }
+.header {
+    background-color: #4CAF50; /* Warna hijau tetap */
+    padding: 25px 0;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.3); /* Bayangan di bawah header */
+    text-align: center;
+    position: relative;
+    z-index: 1000;
+    margin-bottom: 20px; /* Jarak antara header dan konten lainnya */
+}
 
-        .header-text {
-            font-size: 26px;
-            color: #fff;
-            font-weight: bold;
-            margin: 0;
-        }
+/* Header Text Styling */
+.header-text {
+    font-size: 28px; /* Ukuran font lebih besar */
+    color: #fff;
+    font-weight: bold;
+    margin: 0;
+    text-shadow:
+        1px 1px 4px rgba(0, 0, 0, 0.5),    /* Bayangan halus di kanan atas */
+        -1px -1px 4px rgba(0, 0, 0, 0.5),   /* Bayangan halus di kiri bawah */
+        1px -1px 6px rgba(0, 0, 0, 0.3),    /* Bayangan halus di kanan bawah */
+        -1px 1px 6px rgba(0, 0, 0, 0.3),    /* Bayangan halus di kiri atas */
+        0px 4px 10px rgba(0, 0, 0, 0.2);    /* Bayangan lebih besar di bawah */
+}
+
 
         /* Peta Fullscreen */
         #map {
@@ -172,7 +180,7 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <h1 class="header-text">Tambah Titik</h1>
+        <h1 class="header-text">Peta Ruang Terbuka Hijau</h1>
     </div>
 
     <div id="dim-background"></div>

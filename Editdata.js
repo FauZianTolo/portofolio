@@ -76,7 +76,7 @@ const Createdata = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.header, { backgroundColor: selectedUser ? '#FF9800' : '#4CAF50' }]}>
-        <Text style={styles.headerText}>{selectedUser ? 'Edit Data Mahasiswa' : 'Tambah Data Mahasiswa'}</Text>
+        <Text style={styles.headerText}>{selectedUser ? 'Edit Data RTH' : 'Tambah Data RTH'}</Text>
       </View>
       <View style={styles.formContainer}>
         <TextInput
@@ -153,22 +153,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f4',
   },
   header: {
-    paddingVertical: 25,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 5,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  headerText: {
-    fontSize: 26,
-    color: '#fff',
-    fontWeight: 'bold',
-  },
+      backgroundColor: '#4CAF50', // Warna hijau tetap
+      paddingVertical: 25,
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 5 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 5,
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    headerText: {
+      fontSize: 28,
+      color: '#fff',
+      fontWeight: 'bold',
+      textShadowColor: '#000', // Menambahkan efek bayangan pada teks
+      textShadowOffset: { width: 2, height: 2 },
+      textShadowRadius: 10,
+    },
   formContainer: {
     padding: 15,
     backgroundColor: '#fff',

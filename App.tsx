@@ -1,278 +1,138 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React, {useEffect, useRef} from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Animated,
-  Easing,
-} from 'react-native';
-
-import {
-  Colors,
-  Header,
-  LearnMoreLinks,
-} from 'react-native/Libraries/NewAppScreen';
-
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Animated, Easing } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser, faIdCard, faUniversity, faAward } from '@fortawesome/free-solid-svg-icons';
+import { faTree, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-  icon: any;
-  index: number;
-}>;
+const WelcomeScreen = ({ navigateToCrud }) => {
+  const animatedValue = useRef(new Animated.Value(0)).current;
+  const iconScale = useRef(new Animated.Value(1)).current; // Untuk animasi perubahan ukuran ikon
 
-function Section({children, title, icon, index}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const fadeAnim = new Animated.Value(0);
-  const slideAnim = new Animated.Value(50);
-  const shadowAnim = useRef(new Animated.Value(0)).current;
-
+  // Mulai animasi warna
   useEffect(() => {
-    // Entrance animation
-    Animated.parallel([
-      Animated.timing(fadeAnim, {
+    Animated.loop(
+      Animated.timing(animatedValue, {
         toValue: 1,
-        duration: 800,
-        delay: index * 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(slideAnim, {
-        toValue: 0,
-        duration: 800,
-        delay: index * 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
+        duration: 10000, // Durasi lebih lama untuk smooth perubahan
+        easing: Easing.linear,
+        useNativeDriver: false, // Penting untuk properti non-transform
+      })
+    ).start();
 
-    // Continuous shadow animation
+    // Animasi besar-kecil ikon
     Animated.loop(
       Animated.sequence([
-        Animated.timing(shadowAnim, {
-          toValue: 1,
-          duration: 2000,
-          easing: Easing.inOut(Easing.ease),
+        Animated.timing(iconScale, {
+          toValue: 1.2,
+          duration: 500,
+          easing: Easing.ease,
           useNativeDriver: true,
         }),
-        Animated.timing(shadowAnim, {
-          toValue: 0,
-          duration: 2000,
-          easing: Easing.inOut(Easing.ease),
+        Animated.timing(iconScale, {
+          toValue: 1,
+          duration: 500,
+          easing: Easing.ease,
           useNativeDriver: true,
         }),
       ])
     ).start();
-  }, []);
+  }, [animatedValue, iconScale]);
 
-  const animatedShadowStyle = {
-    shadowOpacity: shadowAnim.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0.1, 0.25],
-    }),
-    transform: [
-      {
-        translateY: slideAnim,
-      },
-      {
-        scale: shadowAnim.interpolate({
-          inputRange: [0, 1],
-          outputRange: [1, 1.02],
-        }),
-      },
-    ],
-  };
+  // Interpolasi warna gradasi
+  const backgroundColor = animatedValue.interpolate({
+    inputRange: [0, 0.25, 0.5, 0.75, 1],
+    outputRange: ['#4caf50', '#8bc34a', '#2e7d32', '#388e3c', '#4caf50'], // Siklus gradasi warna
+  });
 
   return (
-    <Animated.View
-      style={[
-        styles.sectionContainer,
-        {
-          opacity: fadeAnim,
-        },
-        animatedShadowStyle,
-      ]}>
-      <View style={[
-        styles.sectionContent,
-        {
-          backgroundColor: isDarkMode
-            ? 'rgba(255, 255, 255, 0.05)'
-            : 'rgba(255, 255, 255, 0.9)',
-        }
-      ]}>
-        <View style={[
-          styles.iconContainer,
-          {
-            backgroundColor: isDarkMode
-              ? 'rgba(0, 122, 255, 0.15)'
-              : 'rgba(0, 122, 255, 0.1)',
-          }
-        ]}>
-          <FontAwesomeIcon
-            icon={icon}
-            size={24}
-            style={[
-              styles.icon,
-              {color: isDarkMode ? Colors.lighter : Colors.darker}
-            ]}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <Text
-            style={[
-              styles.sectionTitle,
-              {color: isDarkMode ? Colors.white : Colors.black},
-            ]}>
-            {title}
-          </Text>
-          <Text
-            style={[
-              styles.sectionDescription,
-              {color: isDarkMode ? Colors.light : Colors.dark},
-            ]}>
-            {children}
-          </Text>
-        </View>
+    <Animated.View style={[styles.container, { backgroundColor }]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2e7d32" />
+      <Text style={styles.appName}>SPROUT</Text>
+      <Text style={styles.tagline}>Spatial Public RTH Optimization and Utilization Tool</Text>
+
+      <View style={styles.iconContainer}>
+        <Animated.View style={{ transform: [{ scale: iconScale }] }}>
+          <FontAwesomeIcon icon={faTree} size={100} color="#ffffff" />
+        </Animated.View>
       </View>
+
+      <Text style={styles.welcomeText}>Selamat Datang</Text>
+      <Text style={styles.subtitle}>Eksplorasi Persebaran RTH Kota Yogyakarta</Text>
+
+      <TouchableOpacity style={styles.button} onPress={navigateToCrud}>
+        <Text style={styles.buttonText}>Mulai Jelajahi</Text>
+        <FontAwesomeIcon icon={faArrowRight} size={18} color="#ffffff" style={styles.buttonIcon} />
+      </TouchableOpacity>
     </Animated.View>
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    flex: 1,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={[
-            styles.mainContainer,
-            {
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            },
-          ]}>
-          <Section title="Nama" icon={faUser} index={0}>
-            Muhammad Nashan Fauzian <Text style={styles.highlight}>(TOLO)</Text>
-          </Section>
-          <Section title="NIM" icon={faIdCard} index={1}>
-            22/498706/SV/21243
-          </Section>
-          <Section title="Program Studi" icon={faUniversity} index={2}>
-            Sistem Informasi Geografis
-          </Section>
-          <Section title="Angkatan" icon={faAward} index={3}>
-            22
-          </Section>
-          <View style={styles.linksContainer}>
-            <LearnMoreLinks />
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+};
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    marginTop: -20,
-    paddingTop: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -3,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  sectionContainer: {
-    marginVertical: 12,
-    paddingHorizontal: 24,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  sectionContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 15,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(0, 122, 255, 0.1)',
-  },
-  iconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+  container: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
-    shadowColor: '#007AFF',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  },
+  appName: {
+    fontSize: 36,
+    color: '#ffffff',
+    fontWeight: 'bold',
+    marginBottom: 5,
+    textAlign: 'center',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 10,
+  },
+  tagline: {
+    fontSize: 14,
+    color: '#c8e6c9',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  iconContainer: {
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 10,
     elevation: 5,
   },
-  textContainer: {
-    flex: 1,
-  },
-  icon: {
-    opacity: 0.9,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-    marginBottom: 4,
-  },
-  sectionDescription: {
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 24,
-  },
-  highlight: {
-    fontWeight: '700',
-    color: '#007AFF',
-  },
-  linksContainer: {
+  welcomeText: {
+    fontSize: 28,
+    color: '#ffffff',
+    fontWeight: 'bold',
     marginTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(0, 0, 0, 0.1)',
-    paddingTop: 20,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#e6ee9c',
+    textAlign: 'center',
+    marginBottom: 50,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#388e3c',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#ffffff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginRight: 10,
+  },
+  buttonIcon: {
+    marginLeft: 10,
   },
 });
 
-export default App;
+export default WelcomeScreen;
