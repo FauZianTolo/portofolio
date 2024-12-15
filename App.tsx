@@ -113,6 +113,9 @@ const WelcomeScreen = ({ navigateToCrud }) => {
           <TouchableOpacity onPress={handleForgotPassword}>
             <Text style={styles.forgotPassword}>Lupa Password?</Text>
           </TouchableOpacity>
+          <TouchableOpacity>
+          <Text style={styles.forgotPassword}>Belum Punya Akun? Registrasi</Text>
+          </TouchableOpacity>
         </View>
       )}
     </Animated.View>
