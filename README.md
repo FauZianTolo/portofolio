@@ -18,35 +18,67 @@ Banyak masyarakat kesulitan mencari **informasi akurat** tentang lokasi RTH terd
 ## 🚀 **Fitur Utama Aplikasi**  
 Aplikasi ini dilengkapi dengan berbagai fitur yang dirancang untuk memberikan pengalaman terbaik bagi penggunanya. Berikut adalah fitur-fitur utama:
 
-### 1. **🏠 Homescreen**
+### 1. **🏠 Homescreen**  
 Halaman utama aplikasi menampilkan daftar RTH yang dapat disortir berdasarkan:
 - **Nama**
 - **Rating**  
-- **Lokasi**
+- **Lokasi**  
 
-### 2. **📋 List Data RTH**
-- Daftar terstruktur RTH yang dapat dengan mudah dicari dan difilter berdasarkan kategori atau lokasi.
-- Setiap RTH memiliki informasi lengkap tentang alamat, fasilitas, rating, dan jam operasional.
+<img src="./images/1.png" width="150"> 
+<img src="./images/11.png" width="150"> 
+<img src="./images/111.png" width="150">
 
-### 3. **👤 Profil Screen**
-Halaman profil memungkinkan pengguna untuk:
-- Melihat informasi pribadi mereka
-- Mengedit profil dan menambahkan preferensi atau feedback terhadap RTH
-
-### 4. **🗺️ Tampilan Peta & Marker**
+### 2. **🗺️ Tampilan Peta & Marker**  
 - Peta interaktif menampilkan lokasi RTH dengan **marker** yang dapat diklik.
 - **Popup** pada setiap marker menunjukkan informasi lengkap seperti rating, fasilitas, gambar, dan alamat.
 - Pengguna dapat melihat rute menuju lokasi RTH menggunakan **Google Maps**.
 
-### 5. **➕ Fitur Tambah Titik & Marker**
+<img src="./images/2.png" width="150"> 
+<img src="./images/22.png" width="150"> 
+<img src="./images/4444.png" width="150">
+<img src="./images/33.png" width="150">
+
+### 3. **➕ Fitur Tambah Titik & Marker**  
 - Pengguna atau pengelola RTH dapat **menambahkan lokasi RTH baru** dengan mengisi informasi terkait.
 - Setelah penambahan, **marker** baru akan muncul di peta dengan data lengkap dan gambar.
 
-### 6. **✏️ Edit Data RTH**
+<img src="./images/222.png" width="150">
+<img src="./images/4.png" width="150"> 
+<img src="./images/44.png" width="150"> 
+<img src="./images/444.png" width="150"> 
+
+
+### 4. **📋 List Data RTH**  
+- Daftar terstruktur RTH yang dapat dengan mudah dicari dan difilter berdasarkan kategori atau lokasi.
+- Setiap RTH memiliki informasi lengkap tentang alamat, fasilitas, rating, dan jam operasional.
+
+<img src="./images/3.png" width="150"> 
+<img src="./images/333.png" width="150"> 
+
+### 5. **✏️ Edit Data RTH**  
 Pengelola atau pengguna dengan hak akses dapat memperbarui:
 - **Jam operasional**
 - **Fasilitas baru**
 - **Gambar atau informasi lain yang relevan**
+
+<img src="./images/55.png" width="150"> 
+<img src="./images/5.png" width="150"> 
+<img src="./images/555.png" width="150">
+
+### 6. **👤 Profil Screen**  
+Halaman profil memungkinkan pengguna untuk:
+- Melihat informasi pribadi mereka
+- Mengedit profil dan menambahkan preferensi atau feedback terhadap RTH
+
+<img src="./images/6.png" width="150"> 
+<img src="./images/66.png" width="150">
+
+### 7. **📰 Halaman Berita Terbaru**  
+- Pengguna dapat melihat informasi terkait **berita terbaru** seputar ruang terbuka hijau di Yogyakarta.
+- Halaman ini menampilkan berita yang relevan dengan **update terkini** dan pengelolaan RTH di kota Yogyakarta.
+
+<img src="./images/7.png" width="150">
+
 
 ---
 

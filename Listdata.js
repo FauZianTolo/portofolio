@@ -78,7 +78,7 @@ const Listdata = () => {
     <ImageBackground
       source={{ uri: 'https://images.unsplash.com/photo-1611243017235-84454d0491aa?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGd1bnVuZyUyMG1lcmFwaXxlbnwwfHwwfHx8MA%3D%3D' }}
       style={styles.backgroundImage}
-      imageStyle={{ opacity: 0.8 }}
+      imageStyle={{ opacity: 0.5 }}
     >
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>

@@ -7,6 +7,7 @@
     <title>Peta Interaktif dengan Marker dan Form Input</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         html,
         body {
@@ -22,31 +23,40 @@
         }
 
         /* Header Styling */
-.header {
-    background-color: #4CAF50; /* Warna hijau tetap */
-    padding: 25px 0;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.3); /* Bayangan di bawah header */
-    text-align: center;
-    position: relative;
-    z-index: 1000;
-    margin-bottom: 20px; /* Jarak antara header dan konten lainnya */
-}
+        .header {
+            background-color: #4CAF50;
+            /* Warna hijau tetap */
+            padding: 25px 0;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.3);
+            /* Bayangan di bawah header */
+            text-align: center;
+            position: relative;
+            z-index: 1000;
+            margin-bottom: 20px;
+            /* Jarak antara header dan konten lainnya */
+        }
 
-/* Header Text Styling */
-.header-text {
-    font-size: 28px; /* Ukuran font lebih besar */
-    color: #fff;
-    font-weight: bold;
-    margin: 0;
-    text-shadow:
-        1px 1px 4px rgba(0, 0, 0, 0.5),    /* Bayangan halus di kanan atas */
-        -1px -1px 4px rgba(0, 0, 0, 0.5),   /* Bayangan halus di kiri bawah */
-        1px -1px 6px rgba(0, 0, 0, 0.3),    /* Bayangan halus di kanan bawah */
-        -1px 1px 6px rgba(0, 0, 0, 0.3),    /* Bayangan halus di kiri atas */
-        0px 4px 10px rgba(0, 0, 0, 0.2);    /* Bayangan lebih besar di bawah */
-}
+        /* Header Text Styling */
+        .header-text {
+            font-size: 28px;
+            /* Ukuran font lebih besar */
+            color: #fff;
+            font-weight: bold;
+            margin: 0;
+            text-shadow:
+                1px 1px 4px rgba(0, 0, 0, 0.5),
+                /* Bayangan halus di kanan atas */
+                -1px -1px 4px rgba(0, 0, 0, 0.5),
+                /* Bayangan halus di kiri bawah */
+                1px -1px 6px rgba(0, 0, 0, 0.3),
+                /* Bayangan halus di kanan bawah */
+                -1px 1px 6px rgba(0, 0, 0, 0.3),
+                /* Bayangan halus di kiri atas */
+                0px 4px 10px rgba(0, 0, 0, 0.2);
+            /* Bayangan lebih besar di bawah */
+        }
 
 
         /* Peta Fullscreen */
@@ -129,50 +139,82 @@
         /* Add Point Button */
         #add-point-btn {
             position: absolute;
-            bottom: 80px;
+            bottom: 20px;
+            /* Posisi di bagian bawah */
             left: 50%;
+            /* Di tengah secara horizontal */
             transform: translateX(-50%);
-            background: #4CAF50;
+            background: linear-gradient(135deg, #4CAF50, #81C784);
+            /* Gradasi hijau lembut */
             color: white;
+            font-weight: bold;
+            font-size: 18px;
+            /* Ukuran font simbol tambah */
+            text-align: center;
             border: none;
-            padding: 10px;
-            border-radius: 50%;
-            font-size: 14px;
+            border-radius: 25px;
+            /* Sudut membulat */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3),
+                0px 6px 15px rgba(0, 0, 0, 0.2);
+            /* Bayangan */
             cursor: pointer;
             z-index: 1000;
-            width: 100px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 10px 30px;
+            /* Padding untuk membuat tombol lebih besar */
+            width: auto;
+            /* Lebar fleksibel */
+            transition: all 0.3s ease;
+            /* Efek animasi saat hover */
         }
 
+        /* Hover Effect */
         #add-point-btn:hover {
-            background: #45a049;
+            background: linear-gradient(135deg, #81C784, #388E3C);
+            /* Gradasi lebih gelap saat hover */
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4),
+                0px 8px 25px rgba(0, 0, 0, 0.3);
+            /* Bayangan lebih tegas */
+            transform: translateX(-50%) translateY(-5px);
+            /* Tombol sedikit naik saat hover */
+            color: #fff;
+            /* Tetap putih */
+            letter-spacing: 1px;
+            /* Jarak antar huruf */
         }
 
-        /* Refresh Button */
+        /* Active (Saat Tombol Ditekan) */
+        #add-point-btn:active {
+            transform: translateX(-50%) translateY(-2px);
+            /* Efek sedikit menekan */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            /* Bayangan berkurang */
+        }
+
+        /* Tombol Refresh */
         #refresh-btn {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            background: #2196F3;
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 50%;
-            font-size: 14px;
+            font-size: 20px;
             cursor: pointer;
             z-index: 1001;
-            width: 40px;
-            height: 40px;
+            width: 55px;
+            height: 55px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         #refresh-btn:hover {
-            background: #1976D2;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
@@ -207,18 +249,16 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
-        var map = L.map('map').setView([-7.774796670378405, 110.37442978811552], 13);
 
-        /* Tile Basemap */
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 19,
-            attribution:
-                'Map data ©️ <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(map);
 
+        // Initialize the map and set its view
+        var map = L.map('map').setView([-7.797817082891303, 110.37726086066507], 13);
+
+        // Tile Basemap
         var basemap1 = L.tileLayer(
             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             {
+                maxZoom: 19,
                 attribution:
                     '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="DIVSIGUGM" target="_blank">DIVSIG UGM</a>',
             }
@@ -236,7 +276,7 @@
             "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
             {
                 attribution:
-                    'Tiles &copy; Esri | <a href="Lathan WebGIS" target="_blank">DIVSIG UGM</a>',
+                    'Tiles &copy; Esri | <a href="Latihan WebGIS" target="_blank">DIVSIG UGM</a>',
             }
         );
 
@@ -248,16 +288,73 @@
             }
         );
 
+        // Set default basemap
         basemap2.addTo(map);
 
+        // Function to generate harmonious colors
+        function getHarmoniousColor(index) {
+            const colors = [
+                "#1f77b4", // Blue
+                "#ff7f0e", // Orange
+                "#2ca02c", // Green
+                "#d62728", // Red
+                "#9467bd", // Purple
+                "#8c564b", // Brown
+                "#e377c2", // Pink
+                "#7f7f7f", // Gray
+                "#bcbd22", // Yellow-Green
+                "#17becf"  // Cyan
+            ];
+            return colors[index % colors.length];
+        }
+
+        // URL to GeoJSON file
+        const geojsonUrl = 'https://fauziantolo.github.io/admin_yk/AdminYK.geojson';
+
+        // Layer group for GeoJSON data
+        const geojsonLayer = L.layerGroup();
+
+        // Fetch and add GeoJSON layer
+        fetch(geojsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                let featureIndex = 0;
+                L.geoJSON(data, {
+                    style: () => ({
+                        color: getHarmoniousColor(featureIndex++),
+                        weight: 2,
+                        opacity: 0.8
+                    }),
+                    onEachFeature: (feature, layer) => {
+                        // Bind a popup to each feature with the KECAMATAN property
+                        if (feature.properties && feature.properties.KECAMATAN) {
+                            layer.bindPopup(`<strong>Kecamatan:</strong> ${feature.properties.KECAMATAN}`);
+                        }
+                    }
+                }).addTo(geojsonLayer);
+
+                geojsonLayer.addTo(map);
+            })
+            .catch(error => {
+                console.error('Error loading GeoJSON:', error);
+            });
+
+        // Define base maps
         var baseMaps = {
-            OpenStreetMap: basemap1,
+            "OpenStreetMap": basemap1,
             "Esri World Street": basemap2,
             "Esri Imagery": basemap3,
             "Stadia Dark Mode": basemap4,
         };
 
-        L.control.layers(baseMaps).addTo(map);
+        // Define overlays
+        var overlays = {
+            "Admin Kecamatan": geojsonLayer
+        };
+
+        // Add layer control
+        L.control.layers(baseMaps, overlays).addTo(map);
+
 
         var formPopup = document.getElementById('form-popup');
         var dimBackground = document.getElementById('dim-background');
@@ -277,7 +374,7 @@
         addPointBtn.addEventListener('click', function () {
             if (!marker) {
                 marker = L.marker(map.getCenter(), { draggable: true }).addTo(map);
-                marker.bindPopup('Geser marker ke lokasi yang diinginkan, lalu klik marker untuk menambahkan data.').openPopup();
+                marker.bindPopup('Geser dan klik marker untuk tambah data RTH').openPopup();
 
                 marker.on('click', function () {
                     var latLng = marker.getLatLng();
@@ -345,30 +442,57 @@
                     data.forEach(item => {
                         L.marker([item.latitude, item.longitude]).addTo(map)
                             .bindPopup(`
-                <strong>${item.name}</strong><br>
-                <img src=${item.image_url} style="width: 100%; height: auto; border-radius: 10px; margin-top: 10px;">
-                        <br>
-                Rating: ${item.rating}<br>
-                ${item.address}<br>
-                Jam: ${item.open}-${item.close}<br>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" target="_blank">
-                    <button style="background-color: #4CAF50; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
-                        Navigasi ke Rute
-                    </button>
-                </a>
-            `);
+                    <div style="font-family: Arial, sans-serif; font-size: 14px; padding: 10px;">
+                        <strong>${item.name}</strong><br>
+                        <img src="${item.image_url}" style="width: 100%; height: auto; border-radius: 10px; margin-top: 10px;">
+                        <br><br>
+
+                        <div style="display: flex; align-items: center; margin-top: -10px;">
+                            <i class="fa fa-star" style="color: gold; margin-right: 8px;"></i>
+                            <span>Rating: ${item.rating}</span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-top: 10px;">
+                            <i class="fa fa-map-marker-alt" style="color: #4CAF50; margin-right: 8px;"></i>
+                            <span>${item.address}</span>
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-top: 10px;">
+                            <i class="fa fa-clock" style="color: #FF9800; margin-right: 8px;"></i>
+                            <span>Jam: ${item.open}-${item.close}</span>
+                        </div>
+
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" target="_blank">
+                            <button style="background-color: #4CAF50; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                                Navigasi ke Rute
+                            </button>
+                        </a>
+                    </div>
+                `);
                     });
-                })
+                });
         }
 
+
+
         refreshBtn.addEventListener('click', function () {
+            // Hapus marker sementara jika ada
+            if (marker) {
+                map.removeLayer(marker);
+                marker = null; // Reset variabel marker
+            }
+
+            // Hapus semua marker kecuali layer yang bukan marker (misalnya, basemap)
             map.eachLayer(function (layer) {
                 if (layer instanceof L.Marker && layer !== marker) {
                     map.removeLayer(layer);
                 }
             });
+
+            // Reload data dari server
             loadData();
         });
+
 
         loadData();
 
