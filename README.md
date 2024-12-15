@@ -20,9 +20,9 @@ Aplikasi ini dilengkapi dengan berbagai fitur yang dirancang untuk memberikan pe
 
 ### 1. **🏠 Homescreen**  
 Halaman utama aplikasi menampilkan daftar RTH yang dapat disortir berdasarkan:
-- **Nama**
-- **Rating**  
-- **Lokasi**  
+- **Pendahuluan**
+- **Tentang RTH**  
+- **Kelebihan**  
 
 <img src="./images/1.png" width="150"> 
 <img src="./images/11.png" width="150"> 
@@ -30,7 +30,7 @@ Halaman utama aplikasi menampilkan daftar RTH yang dapat disortir berdasarkan:
 
 ### 2. **🗺️ Tampilan Peta & Marker**  
 - Peta interaktif menampilkan lokasi RTH dengan **marker** yang dapat diklik.
-- **Popup** pada setiap marker menunjukkan informasi lengkap seperti rating, fasilitas, gambar, dan alamat.
+- **Popup** pada setiap marker menunjukkan informasi lengkap seperti nama, rating, alamat, dan jam operasional.
 - Pengguna dapat melihat rute menuju lokasi RTH menggunakan **Google Maps**.
 
 <img src="./images/2.png" width="150"> 
@@ -40,7 +40,7 @@ Halaman utama aplikasi menampilkan daftar RTH yang dapat disortir berdasarkan:
 
 ### 3. **➕ Fitur Tambah Titik & Marker**  
 - Pengguna atau pengelola RTH dapat **menambahkan lokasi RTH baru** dengan mengisi informasi terkait.
-- Setelah penambahan, **marker** baru akan muncul di peta dengan data lengkap dan gambar.
+- Setelah penambahan, **marker** baru akan muncul di peta dengan data lengkap.
 
 <img src="./images/222.png" width="150">
 <img src="./images/4.png" width="150"> 
@@ -50,16 +50,16 @@ Halaman utama aplikasi menampilkan daftar RTH yang dapat disortir berdasarkan:
 
 ### 4. **📋 List Data RTH**  
 - Daftar terstruktur RTH yang dapat dengan mudah dicari dan difilter berdasarkan kategori atau lokasi.
-- Setiap RTH memiliki informasi lengkap tentang alamat, fasilitas, rating, dan jam operasional.
+- Setiap RTH memiliki informasi lengkap tentang gambar, alamat, fasilitas, rating, dan jam operasional.
 
 <img src="./images/3.png" width="150"> 
 <img src="./images/333.png" width="150"> 
 
 ### 5. **✏️ Edit Data RTH**  
 Pengelola atau pengguna dengan hak akses dapat memperbarui:
-- **Jam operasional**
 - **Fasilitas baru**
-- **Gambar atau informasi lain yang relevan**
+- **Alamat Fasilitas**
+- **Jam Operasional**
 
 <img src="./images/55.png" width="150"> 
 <img src="./images/5.png" width="150"> 
@@ -68,7 +68,6 @@ Pengelola atau pengguna dengan hak akses dapat memperbarui:
 ### 6. **👤 Profil Screen**  
 Halaman profil memungkinkan pengguna untuk:
 - Melihat informasi pribadi mereka
-- Mengedit profil dan menambahkan preferensi atau feedback terhadap RTH
 
 <img src="./images/6.png" width="150"> 
 <img src="./images/66.png" width="150">
@@ -97,18 +96,6 @@ Aplikasi ini dibuat untuk mempermudah akses informasi mengenai **RTH di Kota Yog
 
 ## 🎨 **Desain yang Menarik**  
 Aplikasi ini menggunakan **ikon-ikon intuitif** dan desain visual yang **berwarna-warni** dengan gradasi warna yang membuat navigasi lebih mudah dan menyenangkan. Setiap fitur dilengkapi dengan gambar dan ikon yang memudahkan pengguna dalam memahami fungsinya.
-
----
-
-## 📥 **Cara Install dan Menggunakan Aplikasi**  
-1. **Download & Install:**  
-   Unduh aplikasi dari [Google Play Store / Apple App Store] (link).
-2. **Buka Aplikasi:**  
-   Setelah diinstal, buka aplikasi dan mulailah menjelajahi daftar RTH yang ada di Kota Yogyakarta.
-3. **Tambah RTH Baru:**  
-   Jika Anda mengetahui adanya RTH baru, Anda bisa menambahkannya menggunakan fitur **Tambah Titik**.
-4. **Berikan Feedback:**  
-   Setelah mengunjungi RTH, beri **rating dan feedback** untuk membantu pengguna lain dalam memilih tempat yang tepat.
 
 ---
 
@@ -166,10 +153,6 @@ Proses pembuatan aplikasi ini melalui beberapa tahap yang dimulai dari perencana
 ### 5. **Testing dan Debugging** 🧪
 - Setelah pengembangan selesai, aplikasi diuji di berbagai perangkat (Android dan iOS) untuk memastikan tampilan dan fungsionalitas berjalan dengan lancar tanpa bug.
 
-### 6. **Deployment dan Pengiriman** 📤
-- Aplikasi di-deploy ke **Google Play Store** dan **App Store** untuk diunduh oleh pengguna.
-- Proses ini mencakup penyusunan **metadata** aplikasi (deskripsi, ikon, screenshot).
-
 ---
 
 ## 📝 **Source Code Pembangun Aplikasi**
@@ -204,7 +187,7 @@ Aplikasi *Sebaran Ruang Terbuka Hijau Publik di Kota Yogyakarta* menggabungkan b
 ---
 
 ## 🌐 **Hubungi Kami**  
-Untuk pertanyaan lebih lanjut, hubungi kami di [email] atau kunjungi website kami di [website].  
+Untuk pertanyaan lebih lanjut, hubungi email di [[muhammadnashanfauzian1404@mail.ugm.ac.id](https://mail.google.com/mail/u/0/#inbox)] atau kunjungi instagram di [[@son.tolo.yo](https://www.instagram.com/son.tolo.yo)].  
 **Ikuti kami di media sosial** untuk mendapatkan update terbaru tentang RTH di Kota Yogyakarta!
 
 ---
